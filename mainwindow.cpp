@@ -288,6 +288,12 @@ void MainWindow::on_pushButton_2_clicked()
     struct JEDEC listJEDEC;
     //ui->sizeEdit->setText(QString::number(ch341SpiCapacity()));
     listJEDEC = GetJedecId();
+    if ((listJEDEC.man == 0xff) && (listJEDEC.type == 0xff) && (listJEDEC.capacity == 0xff))
+    {
+        QMessageBox::about(this, "Error", "The chip is not connect or missing!");
+        ui->pushButton_2->setStyleSheet("QPushButton{color:#fff;background-color:rgb(120, 183, 140);border-radius: 20px;border: 2px solid #094065;border-radius:8px;font-weight:600;}");
+        return;
+    }
     ui->jedecEdit->setText(bytePrint(listJEDEC.man) + " " + bytePrint(listJEDEC.type) + " " + bytePrint(listJEDEC.capacity));
     for (i = 0; i< max_rec; i++)
     {

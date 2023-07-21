@@ -293,7 +293,10 @@ struct JEDEC GetJedecId(void)
     else
     {
         printf("Chip not found or missed in ch341a. Check connection\n");
-        exit(0);
+        a.man = 0xff;
+        a.type = 0xff;
+        a.capacity = 0xff;
+        return a;
     }
 
 
@@ -471,7 +474,7 @@ int32_t ch341SpiRead(uint8_t *buf, uint32_t add, uint32_t len)
     xferBulkIn  = libusb_alloc_transfer(0);
     xferBulkOut = libusb_alloc_transfer(0);
 
-    printf("Read started!\n");
+    //printf("Read started!\n");
     while (len > 0) {
         v_print( 1, len); // verbose
         fflush(stdout);
@@ -556,7 +559,7 @@ int32_t ch341SpiWrite(uint8_t *buf, uint32_t add, uint32_t len)
     xferBulkIn  = libusb_alloc_transfer(0);
     xferBulkOut = libusb_alloc_transfer(0);
 
-    printf("Write started!\n");
+    //printf("Write started!\n");
     while (len > 0) {
         v_print(1, len);
 
