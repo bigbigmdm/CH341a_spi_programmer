@@ -10,4 +10,4 @@ The chip database format compatible with EZP2019, EZP2020, EZP2023, Minpro I, XP
 
 [EZP Chip data Editor](https://github.com/bigbigmdm/EZP2019-EZP2025_chip_data_editor)
 
-![CH341A EEPROM programmer](screenshot/ch341a.png)
+![CH341A EEPROM programmer](img/ch341_spi_programmer.png)
