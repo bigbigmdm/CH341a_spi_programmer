@@ -250,7 +250,7 @@ void MainWindow::on_pushButton_clicked()
             }
          addr = addr + currentBlockSize;
          curBlock++;
-         hexEdit->setData(chipData);
+         if (curBlock == 2) hexEdit->setData(chipData); //show buffer in hehedit while chip data is being loaded
          ui->progressBar->setValue(curBlock);
       }
     }
@@ -259,6 +259,7 @@ void MainWindow::on_pushButton_clicked()
     //Not correct Number fnd size of blocks
      QMessageBox::about(this, "Error", "Before reading from chip please press 'Detect' button.");
     }
+    hexEdit->setData(chipData);
     ui->statusBar->showMessage("");
     ui->progressBar->setValue(0);
     ui->pushButton->setStyleSheet("QPushButton{color:#fff;background-color:rgb(120, 183, 140);border-radius: 20px;border: 2px solid #094065;border-radius:8px;font-weight:600;}");
