@@ -734,6 +734,11 @@ void MainWindow::receiveAddr2(QString addressData)
     block = file.readAll();
     blockLen = block.size();
     chipData = hexEdit->data();
+    if (blockStartAddr + blockLen > chipData.size())
+    {
+        QMessageBox::about(this, "Error", "The end address out of image size!");
+        return;
+    }
     for (e=0; e < blockLen; e++)
     {
         chipData[e + blockStartAddr] = block[e];
