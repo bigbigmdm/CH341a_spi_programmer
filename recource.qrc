@@ -11,5 +11,9 @@
         <file>img/open64.png</file>
         <file>img/exit64.png</file>
         <file>img/test64.png</file>
+        <file>img/unprotect64.png</file>
+        <file>img/saveBlock64.png</file>
+        <file>img/loadBlock64.png</file>
+        <file>img/hexsearch64.png</file>
     </qresource>
 </RCC>
