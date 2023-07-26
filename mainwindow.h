@@ -7,6 +7,7 @@
 #include <QFileDialog>
 #include <unistd.h>
 #include "qhexedit.h"
+#include "dialogsp.h"
 extern "C" {
    #include "ch341a.h"
 }
@@ -23,6 +24,11 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+public slots:
+
+    void receiveAddr(QString);
+    void receiveAddr2(QString);
 
 private slots:
     void on_pushButton_clicked();
@@ -62,6 +68,12 @@ private slots:
     void on_pushButton_3_clicked();
 
 
+    void on_actionSave_Part_triggered();
+
+
+
+    void on_actionLoad_Part_triggered();
+
 private:
     Ui::MainWindow *ui;
     int statusCH341;
@@ -93,6 +105,9 @@ private:
     QHexEdit *hexEdit;
     QString sizeConvert(int a);
     QString hexiAddr(int a);
+    uint32_t hexToInt(QString str);
+    QByteArray block;
+    uint32_t blockStartAddr, blockLen;
 };
 
 #endif // MAINWINDOW_H

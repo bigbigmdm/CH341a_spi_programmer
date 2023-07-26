@@ -4,8 +4,11 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QErrorMessage>
+#include <QDragEnterEvent>
 #include <QtGui>
 #include "qhexedit.h"
+#include "dialogsp.h"
+#include "dialogrp.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -56,7 +59,8 @@ MainWindow::MainWindow(QWidget *parent) :
     currentNumBlocks = 0;
     currentBlockSize = 0;
     currentSpeed = 0;
-
+    blockStartAddr = 0;
+    blockLen = 0;
     // connect and status check
     statusCH341 = ch341Configure(0x1a86,0x5512); // VID 1a86 PID 5512 for CH341A
     if (statusCH341 == 0)
@@ -663,3 +667,116 @@ void MainWindow::on_pushButton_3_clicked()
     ui->pushButton_3->setStyleSheet("QPushButton{color:#fff;background-color:rgb(120, 183, 140);border-radius: 20px;border: 2px solid #094065;border-radius:8px;font-weight:600;}");
 }
 
+void MainWindow::receiveAddr(QString addressData)
+{
+    uint32_t blockEndAddr = 0;
+    int e,t;
+    QString endType;
+    e = addressData.indexOf("-");
+    t = addressData.length();
+    blockStartAddr = 0;
+    blockLen = 0;
+    endType = addressData.mid(t - 1, 1);
+    blockStartAddr = hexToInt(addressData.mid(0, e));
+    if (endType.compare("*")==0)
+    {
+        blockEndAddr = hexToInt(addressData.mid(e + 1, t - e - 2));
+        if (blockEndAddr < blockStartAddr)
+        {
+            QMessageBox::about(this, "Error", "The end address must be greater than the starting addres.");
+            return;
+        }
+        blockLen = blockEndAddr - blockStartAddr;
+    }
+    else blockLen = hexToInt(addressData.mid(e + 1, t - e - 2));
+    //qDebug() << blockStartAddr << " " << blockEndAddr << " " << blockLen;
+    block.resize(blockLen);
+    chipData = hexEdit->data();
+    for (e = 0; e < blockLen; e++)
+    {
+        block[e] = chipData[e + blockStartAddr];
+    }
+    ui->statusBar->showMessage("Saving block");
+    fileName = QFileDialog::getSaveFileName(this,
+                                QString::fromUtf8("Save block"),
+                                QDir::currentPath(),
+                                "Data Images (*.bin);;All files (*.*)");
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        QMessageBox::about(this, "Error", "Error saving file!");
+        return;
+    }
+    file.write(block);
+    file.close();
+}
+
+void MainWindow::receiveAddr2(QString addressData)
+{
+    uint32_t blockEndAddr = 0;
+    int e;
+    QString endType;
+    blockStartAddr = 0;
+    blockLen = 0;
+    blockStartAddr = hexToInt(addressData);
+    ui->statusBar->showMessage("Opening block");
+    fileName = QFileDialog::getOpenFileName(this,
+                                QString::fromUtf8("Open block"),
+                                QDir::currentPath(),
+                                "Data Images (*.bin);;All files (*.*)");
+    ui->statusBar->showMessage("Current file: " + fileName);
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+
+        return;
+    }
+    block = file.readAll();
+    blockLen = block.size();
+    chipData = hexEdit->data();
+    for (e=0; e < blockLen; e++)
+    {
+        chipData[e + blockStartAddr] = block[e];
+    }
+    hexEdit->setData(chipData);
+    file.close();
+    ui->statusBar->showMessage("");
+}
+
+void MainWindow::on_actionSave_Part_triggered()
+{
+    DialogSP* savePartDialog = new DialogSP();
+    savePartDialog->show();
+
+    connect(savePartDialog, SIGNAL(sendAddr(QString)), this, SLOT(receiveAddr(QString)));
+}
+
+uint32_t MainWindow::hexToInt(QString str)
+{
+    unsigned char c;
+    int len = str.length();
+    QByteArray bstr = str.toLocal8Bit();
+    if ((len > 0) && (len < 8))
+    {
+        int i, j = 1;
+        uint32_t  addr = 0;
+        for (i = len; i >0; i--)
+        {
+           c = bstr[i-1];
+           if ((c >= 0x30) && (c <=0x39)) addr =  addr + (c - 0x30) * j;
+           if ((c >= 0x41) && (c <= 0x46)) addr = addr + (c - 0x36) * j;
+           if ((c >= 0x61) && (c <= 0x66)) addr = addr + (c - 0x56) * j;
+        j = j * 16;
+        }
+        return addr;
+    }
+    else return 0;
+}
+
+void MainWindow::on_actionLoad_Part_triggered()
+{
+    DialogRP* loadPartDialog = new DialogRP();
+    loadPartDialog->show();
+
+    connect(loadPartDialog, SIGNAL(sendAddr2(QString)), this, SLOT(receiveAddr2(QString)));
+}

@@ -470,6 +470,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="separator"/>
+    <addaction name="actionLoad_Part"/>
+    <addaction name="actionSave_Part"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuProgrammer">
@@ -528,6 +531,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <property name="text">
     <string>Open</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionSave">
    <property name="icon">
@@ -536,6 +542,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    </property>
    <property name="text">
     <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionExit">
@@ -546,6 +555,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <property name="text">
     <string>Exit</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
   </action>
   <action name="actionDetect">
    <property name="icon">
@@ -554,6 +566,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    </property>
    <property name="text">
     <string>Detect</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
   <action name="actionRead">
@@ -564,6 +579,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <property name="text">
     <string>Read</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
   </action>
   <action name="actionErase">
    <property name="icon">
@@ -572,6 +590,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    </property>
    <property name="text">
     <string>Erase</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
    </property>
   </action>
   <action name="actionWrite">
@@ -582,6 +603,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <property name="text">
     <string>Write</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
   </action>
   <action name="actionVerify">
    <property name="icon">
@@ -590,6 +614,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    </property>
    <property name="text">
     <string>Verify</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
    </property>
   </action>
   <action name="actionUndo">
@@ -600,6 +627,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <property name="text">
     <string>Undo</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
   </action>
   <action name="actionRedo">
    <property name="icon">
@@ -608,6 +638,25 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    </property>
    <property name="text">
     <string>Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+, Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="actionSave_Part">
+   <property name="text">
+    <string>Save Part</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+, Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionLoad_Part">
+   <property name="text">
+    <string>Load Part</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+, Ctrl+Shift+O</string>
    </property>
   </action>
  </widget>

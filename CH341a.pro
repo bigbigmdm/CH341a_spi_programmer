@@ -30,18 +30,24 @@ SOURCES += \
     ch341a.c \
 qhexedit.cpp \
 chunks.cpp \
-commands.cpp
+commands.cpp \
+    dialogsp.cpp \
+    dialogrp.cpp
 
 HEADERS += \
         mainwindow.h \
     ch341a.h \
 qhexedit.h \
 chunks.h \
-commands.h
+commands.h \
+    dialogsp.h \
+    dialogrp.h
 
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    dialogsp.ui \
+    dialogrp.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
