@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>879</width>
+    <width>891</width>
     <height>594</height>
    </rect>
   </property>
@@ -260,7 +260,8 @@
       <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(120, 183, 140);
 border-radius: 20px;
-border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
+border: 2px solid #094065;border-radius:8px;font-weight:600;
+</string>
      </property>
      <property name="text">
       <string>Detect</string>
@@ -459,7 +460,7 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>879</width>
+     <width>891</width>
      <height>21</height>
     </rect>
    </property>
@@ -479,7 +480,6 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
     <property name="title">
      <string>Programmer</string>
     </property>
-    <addaction name="actionDetect"/>
     <addaction name="actionRead"/>
     <addaction name="actionErase"/>
     <addaction name="actionWrite"/>
@@ -511,6 +511,8 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    </attribute>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
+   <addaction name="actionSave_Part"/>
+   <addaction name="actionLoad_Part"/>
    <addaction name="actionExit"/>
    <addaction name="separator"/>
    <addaction name="actionDetect"/>
@@ -521,6 +523,7 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <addaction name="separator"/>
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
+   <addaction name="actionFind_Replace"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -640,23 +643,43 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
     <string>Redo</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+, Ctrl+Shift+Z</string>
+    <string>, Ctrl+Shift+Z</string>
    </property>
   </action>
   <action name="actionSave_Part">
+   <property name="icon">
+    <iconset resource="recource.qrc">
+     <normaloff>:/res/img/saveBlock64.png</normaloff>:/res/img/saveBlock64.png</iconset>
+   </property>
    <property name="text">
     <string>Save Part</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+, Ctrl+Shift+S</string>
+    <string>, Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionLoad_Part">
+   <property name="icon">
+    <iconset resource="recource.qrc">
+     <normaloff>:/res/img/loadBlock64.png</normaloff>:/res/img/loadBlock64.png</iconset>
+   </property>
    <property name="text">
     <string>Load Part</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+, Ctrl+Shift+O</string>
+    <string>, Ctrl+Shift+O</string>
+   </property>
+  </action>
+  <action name="actionFind_Replace">
+   <property name="icon">
+    <iconset resource="recource.qrc">
+     <normaloff>:/res/img/hexsearch64.png</normaloff>:/res/img/hexsearch64.png</iconset>
+   </property>
+   <property name="text">
+    <string>Find / Replace</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
    </property>
   </action>
  </widget>

@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include "qhexedit.h"
 #include "dialogsp.h"
+#include "searchdialog.h"
 extern "C" {
    #include "ch341a.h"
 }
@@ -73,6 +74,8 @@ private slots:
 
 
     void on_actionLoad_Part_triggered();
+
+    void on_actionFind_Replace_triggered();
 
 private:
     Ui::MainWindow *ui;

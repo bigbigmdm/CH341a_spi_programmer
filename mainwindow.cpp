@@ -785,3 +785,11 @@ void MainWindow::on_actionLoad_Part_triggered()
 
     connect(loadPartDialog, SIGNAL(sendAddr2(QString)), this, SLOT(receiveAddr2(QString)));
 }
+
+void MainWindow::on_actionFind_Replace_triggered()
+{
+    //DialogSP* savePartDialog = new DialogSP();
+    //savePartDialog->show();
+    SearchDialog* searchDialog = new SearchDialog(hexEdit);
+    searchDialog->show();
+}

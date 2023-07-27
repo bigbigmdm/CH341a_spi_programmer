@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>436</width>
-    <height>223</height>
+    <height>266</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,6 +44,9 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="styleSheet">
+           <string notr="true">border: 2px solid gray;border-radius: 5px;color:#000;font-weight:600;border-style: inset;</string>
+          </property>
           <property name="editable">
            <bool>true</bool>
           </property>
@@ -79,6 +82,9 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border: 2px solid gray;border-radius: 5px;color:#000;font-weight:600;border-style: inset;</string>
           </property>
           <property name="editable">
            <bool>true</bool>
@@ -117,6 +123,12 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="pbFind">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(120, 183, 140);
+border-radius: 20px;
+border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
+       </property>
        <property name="text">
         <string>&amp;Find</string>
        </property>
@@ -130,6 +142,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="pbReplace">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(120, 183, 140);
+border-radius: 20px;
+border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
+       </property>
        <property name="text">
         <string>&amp;Replace</string>
        </property>
@@ -137,6 +155,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="pbReplaceAll">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(120, 183, 140);
+border-radius: 20px;
+border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
+       </property>
        <property name="text">
         <string>Replace &amp;All</string>
        </property>
@@ -144,6 +168,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="pbCancel">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(120, 183, 140);
+border-radius: 20px;
+border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
+       </property>
        <property name="text">
         <string>&amp;Close</string>
        </property>

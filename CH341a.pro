@@ -32,7 +32,8 @@ qhexedit.cpp \
 chunks.cpp \
 commands.cpp \
     dialogsp.cpp \
-    dialogrp.cpp
+    dialogrp.cpp \
+    searchdialog.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,13 +42,15 @@ qhexedit.h \
 chunks.h \
 commands.h \
     dialogsp.h \
-    dialogrp.h
+    dialogrp.h \
+    searchdialog.h
 
 
 FORMS += \
         mainwindow.ui \
     dialogsp.ui \
-    dialogrp.ui
+    dialogrp.ui \
+    searchdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
