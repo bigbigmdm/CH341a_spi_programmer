@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=CH341a_spi
+Name[ru]=Программатор 25хх
+Comment=25xx programming tool for the CH341A USB-programmer
+Comment[ru]=Программатор микросхем 25xx для CH341A USB-programmer
+Exec=/opt/PROG24/prog24
+Type=Application
+StartupNotify=true
+Path=/opt/CH341_SPI/
+Icon=/opt/CH341_SPI/write64.png
+Encoding=UTF-8
+Categories=Application;Development;Electronics;
