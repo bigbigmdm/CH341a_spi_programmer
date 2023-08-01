@@ -783,8 +783,8 @@ uint32_t MainWindow::hexToInt(QString str)
         {
            c = bstr[i-1];
            if ((c >= 0x30) && (c <=0x39)) addr =  addr + (c - 0x30) * j;
-           if ((c >= 0x41) && (c <= 0x46)) addr = addr + (c - 0x36) * j;
-           if ((c >= 0x61) && (c <= 0x66)) addr = addr + (c - 0x56) * j;
+           if ((c >= 0x41) && (c <= 0x46)) addr = addr + (c - 0x37) * j;
+           if ((c >= 0x61) && (c <= 0x66)) addr = addr + (c - 0x57) * j;
         j = j * 16;
         }
         return addr;
