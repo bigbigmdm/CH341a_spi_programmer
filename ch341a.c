@@ -2,7 +2,7 @@
  * This file is part of the ch341prog project.
  *
  * Copyright (C) 2014 Pluto Yang (yangyj.ee@gmail.com)
- *
+ * and 2023 Mikhail Medvedev (e-ink-reader@yandex.ru)
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
