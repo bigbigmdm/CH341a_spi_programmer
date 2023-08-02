@@ -79,23 +79,15 @@ MainWindow::MainWindow(QWidget *parent) :
     blockLen = 0;
     // connect and status check
     statusCH341 = ch341Configure(0x1a86,0x5512); // VID 1a86 PID 5512 for CH341A
-    if (statusCH341 == 0)
-    {
-        ui->eStatus->setText("Connected");
-        ui->eStatus -> setStyleSheet("QLineEdit {border: 2px solid gray;border-radius: 5px;color:#000;background:#9f0;font-weight:600;border-style:inset;}");
-    }
-    else
-    {
-        ui->eStatus->setText("Not connected");
-        ui->eStatus -> setStyleSheet("QLineEdit {border: 2px solid gray;border-radius: 5px;color:#fff;background:#f00;font-weight:600;border-style:inset;}");
-    }
+    ch341StatusFlashing();
     chipData.resize(256);
     for (int i=0; i < 256; i++)
     {
         chipData[i] = char(0xff);
     }
 
-    ch341SetStream(3);
+    //ch341SetStream(3);
+    ch341Release();
     hexEdit = new QHexEdit(ui->frame);
     hexEdit->setGeometry(0,0,ui->frame->width(),ui->frame->height());
      hexEdit->setData(chipData);
@@ -233,6 +225,9 @@ QString MainWindow::bytePrint(unsigned char z)
 
 void MainWindow::on_pushButton_clicked()
 {
+    statusCH341 = ch341Configure(0x1a86,0x5512);
+    ch341StatusFlashing();
+    ch341SetStream(currentSpeed);
     //Reading data from chip
     if ((currentNumBlocks > 0) && (currentBlockSize >0))
     {
@@ -284,6 +279,7 @@ void MainWindow::on_pushButton_clicked()
     ui->statusBar->showMessage("");
     ui->progressBar->setValue(0);
     ui->pushButton->setStyleSheet("QPushButton{color:#fff;background-color:rgb(120, 183, 140);border-radius: 20px;border: 2px solid #094065;border-radius:8px;font-weight:600;}");
+    ch341Release();
 }
 QString MainWindow::sizeConvert(int a)
 {
@@ -298,6 +294,9 @@ QString MainWindow::sizeConvert(int a)
 void MainWindow::on_pushButton_2_clicked()
 {
     //searching the connected chip in database
+    statusCH341 = ch341Configure(0x1a86,0x5512);
+    ch341StatusFlashing();
+    ch341SetStream(currentSpeed);
     if (statusCH341 != 0)
       {
         QMessageBox::about(this, "Error", "Programmer CH341a is not connected!");
@@ -353,6 +352,7 @@ void MainWindow::on_pushButton_2_clicked()
         }
     }
     ui->pushButton_2->setStyleSheet("QPushButton{color:#fff;background-color:rgb(120, 183, 140);border-radius: 20px;border: 2px solid #094065;border-radius:8px;font-weight:600;}");
+    ch341Release();
 }
 
 void MainWindow::on_comboBox_size_currentIndexChanged(int index)
@@ -425,6 +425,9 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_actionErase_triggered()
 {
+    statusCH341 = ch341Configure(0x1a86,0x5512);
+    ch341StatusFlashing();
+    ch341SetStream(currentSpeed);
     int i;
     if (statusCH341 != 0)
       {
@@ -448,6 +451,7 @@ void MainWindow::on_actionErase_triggered()
     ui->statusBar->showMessage("");
     ui->progressBar->setValue(0);
     ui->centralWidget->repaint();
+    ch341Release();
 }
 
 void MainWindow::on_actionUndo_triggered()
@@ -483,6 +487,9 @@ void MainWindow::on_actionOpen_triggered()
 void MainWindow::on_actionWrite_triggered()
 {
     //Writting data to chip
+    statusCH341 = ch341Configure(0x1a86,0x5512);
+    ch341StatusFlashing();
+    ch341SetStream(currentSpeed);
     if (statusCH341 != 0)
       {
         QMessageBox::about(this, "Error", "Programmer CH341a is not connected!");
@@ -536,6 +543,7 @@ void MainWindow::on_actionWrite_triggered()
     ui->progressBar->setValue(0);
     ui->checkBox_2->setStyleSheet("");
     ui->statusBar->showMessage("");
+    ch341Release();
 }
 
 void MainWindow::on_actionRead_triggered()
@@ -608,6 +616,9 @@ void MainWindow::on_comboBox_name_currentIndexChanged(const QString &arg1)
 void MainWindow::on_actionVerify_triggered()
 {
     //Reading data from chip
+    statusCH341 = ch341Configure(0x1a86,0x5512);
+    ch341StatusFlashing();
+    ch341SetStream(currentSpeed);
     if ((currentNumBlocks > 0) && (currentBlockSize >0))
     {
     uint32_t addr = 0;
@@ -664,6 +675,7 @@ void MainWindow::on_actionVerify_triggered()
     ui->statusBar->showMessage("");
     ui->progressBar->setValue(0);
     ui->checkBox_3->setStyleSheet("");
+    ch341Release();
 }
 QString MainWindow::hexiAddr(uint32_t add)
 {
@@ -813,4 +825,17 @@ void MainWindow::on_actionFind_Replace_triggered()
     //savePartDialog->show();
     SearchDialog* searchDialog = new SearchDialog(hexEdit);
     searchDialog->show();
+}
+void MainWindow::ch341StatusFlashing()
+{
+    if (statusCH341 == 0)
+    {
+        ui->eStatus->setText("Connected");
+        ui->eStatus -> setStyleSheet("QLineEdit {border: 2px solid gray;border-radius: 5px;color:#000;background:#9f0;font-weight:600;border-style:inset;}");
+    }
+    else
+    {
+        ui->eStatus->setText("Not connected");
+        ui->eStatus -> setStyleSheet("QLineEdit {border: 2px solid gray;border-radius: 5px;color:#fff;background:#f00;font-weight:600;border-style:inset;}");
+    }
 }

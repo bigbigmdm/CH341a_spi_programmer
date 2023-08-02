@@ -100,6 +100,7 @@ private:
     QString sizeConvert(int a);
     QString hexiAddr(uint32_t a);
     uint32_t hexToInt(QString str);
+    void ch341StatusFlashing();
     QByteArray block;
     uint32_t blockStartAddr, blockLen;
 };
