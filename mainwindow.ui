@@ -534,6 +534,12 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <property name="text">
     <string>Open</string>
    </property>
+   <property name="iconText">
+    <string>Open</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a file from the computer</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
    </property>
@@ -545,6 +551,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    </property>
    <property name="text">
     <string>Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the file to the computer</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
@@ -558,6 +567,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <property name="text">
     <string>Exit</string>
    </property>
+   <property name="toolTip">
+    <string>Exiting the programm</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+X</string>
    </property>
@@ -569,6 +581,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    </property>
    <property name="text">
     <string>Detect</string>
+   </property>
+   <property name="toolTip">
+    <string>Deteсе of chip parameters</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
@@ -582,6 +597,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <property name="text">
     <string>Read</string>
    </property>
+   <property name="toolTip">
+    <string>Reading data from the chip</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
    </property>
@@ -593,6 +611,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    </property>
    <property name="text">
     <string>Erase</string>
+   </property>
+   <property name="toolTip">
+    <string>Erasing all data in the chip</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+E</string>
@@ -606,6 +627,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <property name="text">
     <string>Write</string>
    </property>
+   <property name="toolTip">
+    <string>Writing data to the chip</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+W</string>
    </property>
@@ -618,6 +642,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <property name="text">
     <string>Verify</string>
    </property>
+   <property name="toolTip">
+    <string>Comparison of chip data and buffer data</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
    </property>
@@ -628,6 +655,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
      <normaloff>:/res/img/undo.png</normaloff>:/res/img/undo.png</iconset>
    </property>
    <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="toolTip">
     <string>Undo</string>
    </property>
    <property name="shortcut">
@@ -642,6 +672,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <property name="text">
     <string>Redo</string>
    </property>
+   <property name="toolTip">
+    <string>Redo</string>
+   </property>
    <property name="shortcut">
     <string>, Ctrl+Shift+Z</string>
    </property>
@@ -654,6 +687,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    <property name="text">
     <string>Save Part</string>
    </property>
+   <property name="toolTip">
+    <string>Save part of the buffer data</string>
+   </property>
    <property name="shortcut">
     <string>, Ctrl+Shift+S</string>
    </property>
@@ -665,6 +701,9 @@ border: 2px solid #094065;border-radius:8px;font-weight:600;</string>
    </property>
    <property name="text">
     <string>Load Part</string>
+   </property>
+   <property name="toolTip">
+    <string>Loading part of the data into the buffer</string>
    </property>
    <property name="shortcut">
     <string>, Ctrl+Shift+O</string>

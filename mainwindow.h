@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2023 Mikhail Medvedev <e-ink-reader@yandex.ru>
- * 
+ *
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -47,48 +47,25 @@ public slots:
 
 private slots:
     void on_pushButton_clicked();
-
     void on_pushButton_2_clicked();
-
     void on_comboBox_size_currentIndexChanged(int index);
-
     void on_comboBox_page_currentIndexChanged(int index);
-
     void on_comboBox_speed_currentIndexChanged(int index);
-
     void on_actionDetect_triggered();
-
     void on_actionSave_triggered();
-
     void on_actionErase_triggered();
-
     void on_actionUndo_triggered();
-
     void on_actionRedo_triggered();
-
     void on_actionOpen_triggered();
-
     void on_actionWrite_triggered();
-
     void on_actionRead_triggered();
-
     void on_actionExit_triggered();
-
     void on_comboBox_man_currentIndexChanged(int index);
-
     void on_comboBox_name_currentIndexChanged(const QString &arg1);
-
     void on_actionVerify_triggered();
-
     void on_pushButton_3_clicked();
-
-
     void on_actionSave_Part_triggered();
-
-
-
     void on_actionLoad_Part_triggered();
-
     void on_actionFind_Replace_triggered();
 
 private:
@@ -121,7 +98,7 @@ private:
     QString fileName;
     QHexEdit *hexEdit;
     QString sizeConvert(int a);
-    QString hexiAddr(int a);
+    QString hexiAddr(uint32_t a);
     uint32_t hexToInt(QString str);
     QByteArray block;
     uint32_t blockStartAddr, blockLen;

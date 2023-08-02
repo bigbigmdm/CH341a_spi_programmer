@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2023 Mikhail Medvedev <e-ink-reader@yandex.ru>
- * 
+ *
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,6 +23,8 @@
 #include "qhexedit.h"
 #include "dialogsp.h"
 #include "dialogrp.h"
+#include <alloca.h>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -90,7 +92,7 @@ MainWindow::MainWindow(QWidget *parent) :
     chipData.resize(256);
     for (int i=0; i < 256; i++)
     {
-        chipData[i] = 0xff;
+        chipData[i] = char(0xff);
     }
 
     ch341SetStream(3);
@@ -113,10 +115,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->statusBar->showMessage("Parsing DAT file");
     //parsing qbytearray
     char txtBuf[0x30];
-    int i, j, recNo, dataPoz, dataSize, delay, rowCount, index;
+    int i, j, recNo, dataPoz, dataSize, delay;
     uint32_t chipSize;
     uint16_t blockSize;
-    unsigned char chipSizeCode, chipID, manCode, tmpBuf;
+    unsigned char tmpBuf;
     dataPoz = 0;
     recNo = 0;
     QStringList verticalHeader;
@@ -154,46 +156,46 @@ MainWindow::MainWindow(QWidget *parent) :
                  }
              j++;
              i = 0;
-             while ((i < 0x30) && (dataChips[recNo * 0x44 + j] != 0x00)) // ASCII data reading
+             while ((i < 0x30) && (dataChips[recNo * 0x44 + j] != '\0')) // ASCII data reading
              {
                  txtBuf[i] = dataChips[recNo * 0x44 + j];
                  j++;
                  i++;
              }
              chips[recNo].chipName = QByteArray::fromRawData(txtBuf, 0x30);            
-             chips[recNo].chipJedecIDMan = dataChips[recNo * 0x44 + 0x32];
-             chips[recNo].chipJedecIDDev = dataChips[recNo * 0x44 + 0x31];
-             chips[recNo].chipJedecIDCap = dataChips[recNo * 0x44 + 0x30];
-             tmpBuf = dataChips[recNo * 0x44 + 0x34];
+             chips[recNo].chipJedecIDMan = static_cast<uint8_t>(dataChips[recNo * 0x44 + 0x32]);
+             chips[recNo].chipJedecIDDev = static_cast<uint8_t>(dataChips[recNo * 0x44 + 0x31]);
+             chips[recNo].chipJedecIDCap = static_cast<uint8_t>(dataChips[recNo * 0x44 + 0x30]);
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x34]);
              chipSize = tmpBuf;
-             tmpBuf = dataChips[recNo * 0x44 + 0x35];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x35]);
              chipSize = chipSize + tmpBuf * 256;
-             tmpBuf = dataChips[recNo * 0x44 + 0x36];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x36]);
              chipSize = chipSize + tmpBuf * 256 * 256;
-             tmpBuf = dataChips[recNo * 0x44 + 0x37];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x37]);
              chipSize = chipSize + tmpBuf * 256 * 256 * 256;
              chips[recNo].chipSize = chipSize;
-             tmpBuf = dataChips[recNo * 0x44 + 0x38];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x38]);
              blockSize = tmpBuf;
-             tmpBuf = dataChips[recNo * 0x44 + 0x39];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x39]);
              blockSize = blockSize + tmpBuf * 256;
              chips[recNo].blockSize = blockSize;
-             tmpBuf = dataChips[recNo * 0x44 + 0x3a];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x3a]);
              chips[recNo].chipTypeHex = tmpBuf;
-             tmpBuf = dataChips[recNo * 0x44 + 0x3b];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x3b]);
              chips[recNo].algorithmCode = tmpBuf;
-             tmpBuf = dataChips[recNo * 0x44 + 0x3c];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x3c]);
              delay = tmpBuf;
-             tmpBuf = dataChips[recNo * 0x44 + 0x3d];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x3d]);
              delay = delay + tmpBuf * 256;
              chips[recNo].delay = delay;
-             tmpBuf = dataChips[recNo * 0x44 + 0x3e];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x3e]);
              chips[recNo].extend = tmpBuf;
-             tmpBuf = dataChips[recNo * 0x44 + 0x40];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x40]);
              chips[recNo].eeprom = tmpBuf;
-             tmpBuf = dataChips[recNo * 0x44 + 0x42];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x42]);
              chips[recNo].eepromPages = tmpBuf;
-             tmpBuf = dataChips[recNo * 0x44 + 0x43];
+             tmpBuf = static_cast<unsigned char>(dataChips[recNo * 0x44 + 0x43]);
              if (tmpBuf == 0x00) chips[recNo].chipVCC = "3.3 V";
              if (tmpBuf == 0x01) chips[recNo].chipVCC = "1.8 V";
              if (tmpBuf == 0x02) chips[recNo].chipVCC = "5.0 V";
@@ -234,15 +236,16 @@ void MainWindow::on_pushButton_clicked()
     //Reading data from chip
     if ((currentNumBlocks > 0) && (currentBlockSize >0))
     {
-    int addr = 0;
-    int curBlock = 0;
-    QString hexLine = "";
-    QString asciiLine = "";
-    int j, k, res;
+    uint32_t addr = 0;
+    uint32_t curBlock = 0;
+    uint32_t j, k;
+    int res;
     //progerssbar settings
-    ui->progressBar->setRange(0, currentNumBlocks);
+    ui->progressBar->setRange(0, static_cast<int>(currentNumBlocks));
     ui->progressBar->setValue(0);
-    uint8_t buf[currentBlockSize];
+    //uint8_t buf[currentBlockSize];
+    uint8_t *buf;
+    buf = (uint8_t *)malloc(currentBlockSize);
     ui->pushButton->setStyleSheet("QPushButton{color:#fff;background-color:#f66;border-radius: 20px;border: 2px solid #094065;border-radius:8px;font-weight:600;}");
     ui->statusBar->showMessage("Reading data from " + ui->comboBox_name->currentText());
     //Select bus speed
@@ -264,12 +267,12 @@ void MainWindow::on_pushButton_clicked()
            }
          for (j = 0; j < currentBlockSize; j++)
             {
-                  chipData[addr + j] = buf[addr + j - k * currentBlockSize];
+                  chipData[addr + j] = char(buf[addr + j - k * currentBlockSize]);
             }
          addr = addr + currentBlockSize;
          curBlock++;
          if (curBlock == 2) hexEdit->setData(chipData); //show buffer in hehedit while chip data is being loaded
-         ui->progressBar->setValue(curBlock);
+         ui->progressBar->setValue(static_cast<int>(curBlock));
       }
     }
     else
@@ -355,43 +358,46 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_comboBox_size_currentIndexChanged(int index)
 {
     //qDebug() <<"size="<< ui->comboBox_size->currentData().toInt() << " block_size=" << ui->comboBox_page->currentData().toInt();
-    currentChipSize = ui->comboBox_size->currentData().toInt();
-    currentBlockSize = ui->comboBox_page->currentData().toInt();
+    currentChipSize = ui->comboBox_size->currentData().toUInt();
+    currentBlockSize = ui->comboBox_page->currentData().toUInt();
     if ((currentChipSize !=0) && (currentBlockSize!=0))
     {
         currentNumBlocks = currentChipSize / currentBlockSize;
-        chipData.resize(currentChipSize);
+        chipData.resize(static_cast<int>(currentChipSize));
         for (uint32_t i=0; i < currentChipSize; i++)
         {
-            chipData[i] = 0xff;
+            chipData[i] = char(0xff);
         }
         hexEdit->setData(chipData);
     }
+    index = index + 0;
 }
 
 void MainWindow::on_comboBox_page_currentIndexChanged(int index)
 {
-    currentChipSize = ui->comboBox_size->currentData().toInt();
-    currentBlockSize = ui->comboBox_page->currentData().toInt();
+    currentChipSize = ui->comboBox_size->currentData().toUInt();
+    currentBlockSize = ui->comboBox_page->currentData().toUInt();
     if ((currentChipSize !=0) && (currentBlockSize!=0))
     {
         currentNumBlocks = currentChipSize / currentBlockSize;
-        chipData.resize(currentChipSize);
+        chipData.resize(static_cast<int>(currentChipSize));
         for (uint32_t i=0; i < currentChipSize; i++)
         {
-            chipData[i] = 0xff;
+            chipData[i] = char(0xff);
         }
         hexEdit->setData(chipData);
     }
+    index = index + 0;
 }
 
 void MainWindow::on_comboBox_speed_currentIndexChanged(int index)
 {
     if (ui->comboBox_speed->currentData().toInt() != -1)
     {
-       currentSpeed = ui->comboBox_speed->currentData().toInt();
+       currentSpeed =  static_cast<unsigned char>(ui->comboBox_speed->currentData().toInt());
        ch341SetStream(currentSpeed);
     }
+    index = index + 0;
 }
 
 void MainWindow::on_actionDetect_triggered()
@@ -430,7 +436,7 @@ void MainWindow::on_actionErase_triggered()
     ui->centralWidget->repaint();
     ui->progressBar->setRange(0, 100);
     ui->progressBar->setValue(50);
-    int res = ch341EraseChip();
+    ch341EraseChip();
     for (i=0; i < 120; i++)
     {
        sleep(1);
@@ -484,24 +490,24 @@ void MainWindow::on_actionWrite_triggered()
       }
     if ((currentNumBlocks > 0) && (currentBlockSize >0))
     {
-    int addr = 0;
-    int curBlock = 0;
-    int j, k, res;
+    uint32_t addr = 0;
+    uint32_t curBlock = 0;
+    uint32_t j, k;
+    int res;
     ui->statusBar->showMessage("Writing data to " + ui->comboBox_name->currentText());
     //progerssbar settings
-    ui->progressBar->setRange(0, currentNumBlocks);
+    ui->progressBar->setRange(0, static_cast<int>(currentNumBlocks));
     ui->checkBox_2->setStyleSheet("QCheckBox{font-weight:800;}");
     chipData = hexEdit->data();
-    uint8_t buf[currentBlockSize];
-
-    //Select bus speed
-    //
+    //uint8_t buf[currentBlockSize];
+    uint8_t *buf;
+    buf = (uint8_t *)malloc(currentBlockSize);
     for (k = 0; k < currentNumBlocks; k++)
       {
 
          for (j = 0; j < currentBlockSize; j++)
             {
-               buf[addr + j - k * currentBlockSize] = chipData[addr + j] ;
+               buf[addr + j - k * currentBlockSize] = static_cast<uint8_t>(chipData[addr + j]) ;
             }
          //int32_t ch341SpiWrite(uint8_t *buf, uint32_t add, uint32_t len)
          res = ch341SpiWrite(buf, curBlock * currentBlockSize, currentBlockSize);
@@ -518,7 +524,7 @@ void MainWindow::on_actionWrite_triggered()
            }
          addr = addr + currentBlockSize;
          curBlock++;
-         ui->progressBar->setValue(curBlock);
+         ui->progressBar->setValue(static_cast<int>(curBlock));
 
       }
     }
@@ -529,6 +535,7 @@ void MainWindow::on_actionWrite_triggered()
     }
     ui->progressBar->setValue(0);
     ui->checkBox_2->setStyleSheet("");
+    ui->statusBar->showMessage("");
 }
 
 void MainWindow::on_actionRead_triggered()
@@ -563,7 +570,7 @@ void MainWindow::on_comboBox_man_currentIndexChanged(int index)
         ui->comboBox_name->setCurrentIndex(0);
         ui->statusBar->showMessage("");
    }
-
+   index = index + 0;
 }
 
 void MainWindow::on_comboBox_name_currentIndexChanged(const QString &arg1)
@@ -603,15 +610,16 @@ void MainWindow::on_actionVerify_triggered()
     //Reading data from chip
     if ((currentNumBlocks > 0) && (currentBlockSize >0))
     {
-    int addr = 0;
-    int curBlock = 0;
-    QString hexLine = "";
-    QString asciiLine = "";
-    int i,j, k, res;
+    uint32_t addr = 0;
+    uint32_t curBlock = 0;
+    uint32_t j, k;
+    int  res;
     //progerssbar settings
-    ui->progressBar->setRange(0, currentNumBlocks);
+    ui->progressBar->setRange(0, static_cast<int>(currentNumBlocks));
     ui->progressBar->setValue(0);
-    uint8_t buf[currentBlockSize];
+    //uint8_t buf[currentBlockSize];
+    uint8_t *buf;
+    buf = (uint8_t *)malloc(currentBlockSize);
     chipData = hexEdit->data();
     ui->checkBox_3->setStyleSheet("QCheckBox{font-weight:800;}");
     ui->statusBar->showMessage("Veryfing data from " + ui->comboBox_name->currentText());
@@ -634,10 +642,10 @@ void MainWindow::on_actionVerify_triggered()
            }
          for (j = 0; j < currentBlockSize; j++)
             {
-                 if (chipData[addr + j] != buf[addr + j - k * currentBlockSize])
+                 if (chipData[addr + j] != char(buf[addr + j - k * currentBlockSize]))
                  {
                      //error compare
-                     QMessageBox::about(this, "Error", "Error comparing data!\nAddress:   " + hexiAddr(addr + j) + "\nBuffer: " + bytePrint(chipData[addr + j]) + "    Chip: " + bytePrint(buf[addr + j - k * currentBlockSize]));
+                     QMessageBox::about(this, "Error", "Error comparing data!\nAddress:   " + hexiAddr(addr + j) + "\nBuffer: " + bytePrint(static_cast<unsigned char>(chipData[addr + j])) + "    Chip: " + bytePrint(static_cast<unsigned char>(buf[addr + j - k * currentBlockSize])));
                      ui->statusBar->showMessage("");
                      ui->checkBox_3->setStyleSheet("");
                      return;
@@ -645,7 +653,7 @@ void MainWindow::on_actionVerify_triggered()
             }
          addr = addr + currentBlockSize;
          curBlock++;
-         ui->progressBar->setValue(curBlock);
+         ui->progressBar->setValue(static_cast<int>(curBlock));
       }
     }
     else
@@ -657,7 +665,7 @@ void MainWindow::on_actionVerify_triggered()
     ui->progressBar->setValue(0);
     ui->checkBox_3->setStyleSheet("");
 }
-QString MainWindow::hexiAddr(int add)
+QString MainWindow::hexiAddr(uint32_t add)
 {
  QString rez = "";
  uint8_t A,B,C,D;
@@ -683,7 +691,7 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::receiveAddr(QString addressData)
 {
-    uint32_t blockEndAddr = 0;
+    uint32_t ee, blockEndAddr = 0;
     int e,t;
     QString endType;
     e = addressData.indexOf("-");
@@ -704,11 +712,11 @@ void MainWindow::receiveAddr(QString addressData)
     }
     else blockLen = hexToInt(addressData.mid(e + 1, t - e - 2));
     //qDebug() << blockStartAddr << " " << blockEndAddr << " " << blockLen;
-    block.resize(blockLen);
+    block.resize(static_cast<int>(blockLen));
     chipData = hexEdit->data();
-    for (e = 0; e < blockLen; e++)
+    for (ee = 0; ee < blockLen; ee++)
     {
-        block[e] = chipData[e + blockStartAddr];
+        block[ee] = chipData[ee + blockStartAddr];
     }
     ui->statusBar->showMessage("Saving block");
     fileName = QFileDialog::getSaveFileName(this,
@@ -727,8 +735,7 @@ void MainWindow::receiveAddr(QString addressData)
 
 void MainWindow::receiveAddr2(QString addressData)
 {
-    uint32_t blockEndAddr = 0;
-    int e;
+    uint32_t ee;
     QString endType;
     blockStartAddr = 0;
     blockLen = 0;
@@ -746,16 +753,16 @@ void MainWindow::receiveAddr2(QString addressData)
         return;
     }
     block = file.readAll();
-    blockLen = block.size();
+    blockLen = static_cast<uint32_t>(block.size());
     chipData = hexEdit->data();
-    if (blockStartAddr + blockLen > chipData.size())
+    if (blockStartAddr + blockLen > static_cast<uint32_t>(chipData.size()))
     {
         QMessageBox::about(this, "Error", "The end address out of image size!");
         return;
     }
-    for (e=0; e < blockLen; e++)
+    for (ee=0; ee < blockLen; ee++)
     {
-        chipData[e + blockStartAddr] = block[e];
+        chipData[ee + blockStartAddr] = block[ee];
     }
     hexEdit->setData(chipData);
     file.close();
@@ -773,15 +780,15 @@ void MainWindow::on_actionSave_Part_triggered()
 uint32_t MainWindow::hexToInt(QString str)
 {
     unsigned char c;
-    int len = str.length();
+    uint32_t len = static_cast<uint32_t>(str.length());
     QByteArray bstr = str.toLocal8Bit();
     if ((len > 0) && (len < 8))
     {
-        int i, j = 1;
+        uint32_t i, j = 1;
         uint32_t  addr = 0;
         for (i = len; i >0; i--)
         {
-           c = bstr[i-1];
+           c = static_cast<unsigned char>(bstr[i-1]);
            if ((c >= 0x30) && (c <=0x39)) addr =  addr + (c - 0x30) * j;
            if ((c >= 0x41) && (c <= 0x46)) addr = addr + (c - 0x37) * j;
            if ((c >= 0x61) && (c <= 0x66)) addr = addr + (c - 0x57) * j;
