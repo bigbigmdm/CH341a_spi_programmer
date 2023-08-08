@@ -313,6 +313,7 @@ void MainWindow::on_pushButton_2_clicked()
     {
         QMessageBox::about(this, "Error", "The chip is not connect or missing!");
         ui->pushButton_2->setStyleSheet("QPushButton{color:#fff;background-color:rgb(120, 183, 140);border-radius: 20px;border: 2px solid #094065;border-radius:8px;font-weight:600;}");
+        ch341Release();
         return;
     }
     ui->jedecEdit->setText(bytePrint(listJEDEC.man) + " " + bytePrint(listJEDEC.type) + " " + bytePrint(listJEDEC.capacity));
@@ -575,8 +576,11 @@ void MainWindow::on_comboBox_man_currentIndexChanged(int index)
                     if ( index2 == -1 ) ui->comboBox_name->addItem(chips[i].chipName);
            }
        }
-        ui->comboBox_name->setCurrentIndex(0);
-        ui->statusBar->showMessage("");
+       ui->comboBox_name->setCurrentIndex(0);
+       ui->comboBox_vcc->setCurrentIndex(0);
+       ui->comboBox_page->setCurrentIndex(0);
+       ui->comboBox_size->setCurrentIndex(0);
+       ui->statusBar->showMessage("");
    }
    index = index + 0;
 }
