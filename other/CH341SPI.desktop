@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CH341SPI
+Icon=/opt/CH341SPI/write64.png
+Exec=/opt/CH341SPI/CH341SPI
+Path=/opt/CH341SPI/
+NoDisplay=false
+Categories=Electronics;Development;
+StartupNotify=true
+Terminal=false
+Comment=SPI Flash chips programmer
+GenericName=SPI Flash chips programmer
