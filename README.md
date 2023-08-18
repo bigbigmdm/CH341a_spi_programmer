@@ -19,3 +19,8 @@ make -j4
 sudo make install
 ```
 
+## System requirements
+- cmake library
+`sudo apt install cmake`
+-libusb library
+`sudo apt-get install libusb-1.0-0-dev`
