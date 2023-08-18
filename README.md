@@ -10,6 +10,7 @@ The chip database format compatible with EZP2019, EZP2020, EZP2023, Minpro I, XP
 
 ![CH341A EEPROM programmer](img/ch341_spi_programmer.png)
 
+##Building
 ```
 mkdir build
 cd build
