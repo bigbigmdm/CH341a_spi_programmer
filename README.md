@@ -27,3 +27,7 @@ sudo make install
 - libusb library
 
 `sudo apt-get install libusb-1.0-0-dev`
+
+## Related links
+
+See also my [IMSProg](https://github.com/bigbigmdm/IMSProg) - universal linux programmer for the CH341a device.
