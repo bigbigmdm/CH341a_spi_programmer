@@ -26,7 +26,12 @@ sudo make install
 
 - libusb library
 
-`sudo apt-get install libusb-1.0-0-dev qtbase5-dev qtdeclarative5-dev`
+`sudo apt install libusb-1.0-0-dev`
+
+- Qt5 development library
+
+`sudo apt install qtbase5-dev`
+
 
 ## Related links
 
